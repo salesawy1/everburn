@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
     
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
     <style id="expo-reset">
@@ -24,6 +24,7 @@
       }
     </style>
   
+    <!--EVERBURN-META-START-->
     <title>Everburn — a survival incremental, free to play</title>
     <meta name="description" content="You wake with no name and no past. Gather, survive, die, and come back stronger. A premium, ad-free survival incremental for iOS — play the first chapters free in your browser.">
     <meta name="theme-color" content="#0b0d10">
@@ -43,18 +44,28 @@
     <meta name="twitter:description" content="A premium, ad-free survival incremental for iOS. Play the first chapters free in your browser.">
     <meta name="twitter:image" content="https://salesawy1.github.io/everburn/play/og.png">
     <style>
-      html, body { background:#050607; margin:0; padding:0; height:100%; }
+      /* dark ambient ground; centered phone-width column on desktop, full-bleed on mobile.
+         !important + margin:auto beat the inline width react-native-web sets on #root. */
+      html, body { background:#050607; margin:0; padding:0; }
       body { overscroll-behavior:none; }
       #root {
         max-width:460px !important;
         margin:0 auto !important;
-        height:100dvh !important;
-        min-height:100vh;
+        box-sizing:border-box !important;
+        height:100vh !important;   /* fallback for browsers without dvh */
+        height:100dvh !important;  /* excludes the mobile browser toolbar so content isn't hidden under it */
+        padding-bottom:env(safe-area-inset-bottom, 0px) !important; /* clear the home indicator */
         overflow:hidden;
         background:#0d0f12;
         box-shadow:0 0 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
       }
+      /* Force the cold-open lines to wrap: react-native-web renders the nested
+         typed <Text> as inline (ignores width), so pin a viewport-based cap that
+         doesn't depend on flex resolving. 3rem = the overlay's 2x padding. */
+      #everburn-intro { max-width: calc(min(100vw, 460px) - 3rem) !important; }
+      #everburn-intro, #everburn-intro * { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: break-word; }
     </style>
+    <!--EVERBURN-META-END-->
   </head>
 
   <body>
@@ -64,6 +75,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/everburn/play/_expo/static/js/web/index-5bda1a490b67825a68a96a93d281acf4.js" defer></script>
+  <script src="/everburn/play/_expo/static/js/web/index-5e6a670f2084a5438ddfb8a83570d6ad.js" defer></script>
 </body>
 </html>
